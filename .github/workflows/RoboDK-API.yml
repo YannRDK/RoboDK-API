@@ -46,13 +46,13 @@ jobs:
       - name: Run Tests
         run: |
           cd /Python/tests
-          nose2 --config nose2.cfg -v --log-capture --plugin=nose2_html_report.html_report
+          mkdir test_reports
+          nose2 --config nose2.cfg -v --log-capture --plugin=nose2_html_report.html_report --html-report-dir=test_reports --junit-xml test_reports/results.xml
 
       - name: Upload Test Results
-        if: always()
         uses: actions/upload-artifact@v2
         with:
           name: TestResults
           path: |
-           /Python/tests/results.xml
-           /Python/tests/report.html
+            /Python/tests/test_reports/results.xml
+            /Python/tests/test_reports/report.html
