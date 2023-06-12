@@ -48,7 +48,7 @@ jobs:
       - name: Run Tests
         run: |
           ls
-          cd /dir
+          cd /bin
           ls
           cd ..
           mkdir -p test_reports
