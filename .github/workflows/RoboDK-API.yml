@@ -10,7 +10,7 @@ on:
 
 env:
   BUILD_TYPE: Release
-  ROBODK_BIN: /opt/robodk/bin/RoboDK
+  ROBODK_BIN: /bin/RoboDK
 
 jobs:
 
@@ -31,13 +31,9 @@ jobs:
       ports:
         - 20501:20501
       volumes:
-        - ${{ github.workspace }}:/Python/tests
+        - ${{ github.workspace }}:/API_TEST
 
     steps:
-      - name: docker run
-        run: |
-          docker run -dp 20501:20501 -e RDK_PORT=20501 -t robodk:latest
-
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -49,17 +45,15 @@ jobs:
           pip3 install nose2-html-report
           pip3 install parameterized
 
-      - name: Check RoboDK installation
-        run: |
-          echo "Checking RoboDK installation:"
-          whereis RoboDK
-          which RoboDK
-
       - name: Run Tests
         run: |
-          cd /Python/tests/Python
+          ls
+          cd /dir
+          ls
+          cd ..
           mkdir -p test_reports
-          nose2 --verbose --log-capture --config nose2.cfg -s /Python/tests/Python
+          cd test_reports
+          nose2 --verbose --log-capture --config nose2.cfg -s /API_TEST/Python/tests
           echo "Generated report:"
           ls -la test_reports
           
@@ -69,5 +63,5 @@ jobs:
         with:
           name: TestResults
           path: |
-            /Python/tests/test_reports/results.xml
-            /Python/tests/test_reports/report.html
+            /test_reports/results.xml
+            /test_reports/report.html

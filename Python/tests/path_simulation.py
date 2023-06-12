@@ -5,7 +5,7 @@ import os
 
 
 sys.path.insert(0, "..")
-robolink_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..'))
+robolink_path = /bin/RoboDK
 sys.path.insert(0, robolink_path)
 
 from robodk.robolink import *
