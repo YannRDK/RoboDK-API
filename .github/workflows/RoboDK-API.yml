@@ -31,7 +31,7 @@ jobs:
       ports:
         - 20501:20501
       volumes:
-        - ${{ github.workspace }}:/Python/tests
+        - ${{ github.workspace }}:/github/home
 
     steps:
       - name: Checkout
@@ -47,19 +47,19 @@ jobs:
 
       - name: Run Tests
         run: |
-          cd ~
+          cd /github/home
           ls -la
           pwd
-          cd /Python
+          cd /github/home/Python
           ls -la
           pwd
-          cd /Python/tests
+          cd /Python/home/RoboDK
           ls -la
           pwd
-          cd /Python/tests/Python
+          cd /Python/tests/Python/tests
           ls -la
           mkdir -p test_reports
-          nose2 --verbose --log-capture --config nose2.cfg -s /Python/tests/Python
+          nose2 --verbose --log-capture --config nose2.cfg -s /github/home/Python/tests
           echo "Generated report:"
           ls -la test_reports
           
@@ -69,5 +69,5 @@ jobs:
         with:
           name: TestResults
           path: |
-            /Python/tests/test_reports/results.xml
-            /Python/tests/test_reports/report.html
+            /github/home/Python/tests/test_reports/results.xml
+            /github/home/Python/tests/test_reports/report.html
