@@ -47,7 +47,17 @@ jobs:
 
       - name: Run Tests
         run: |
+          cd ~
+          ls -la
+          pwd
+          cd /Python
+          ls -la
+          pwd
+          cd /Python/tests
+          ls -la
+          pwd
           cd /Python/tests/Python
+          ls -la
           mkdir -p test_reports
           nose2 --verbose --log-capture --config nose2.cfg -s /Python/tests/Python
           echo "Generated report:"
