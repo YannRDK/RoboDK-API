@@ -1,4 +1,4 @@
-name: RoboDK
+name: RoboDK-API
 
 on: 
   pull_request:
@@ -6,95 +6,49 @@ on:
   workflow_dispatch: # Run workflow manually
     branches: [master]
     paths:
-      - "Python/**"
-      - "!Python/Examples/**"
-      - "!Python/setup.py"
-      - "**.py"
+      - "Python/robodk/*.py"
 
 env:
   BUILD_TYPE: Release
 
 jobs:
-  build_linux:
+
+  # This job runs the tests in the RoboDK docker image.
+  test_robodk:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: true
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        python-version: ["3.10"]    #["3.7", "3.8", "3.9", "3.10", "3.11"]
+    container: 
+      image: robodk/robodk:latest
+      credentials:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_TOKEN }}  
+      options: --user root
+      ports:
+        - 20501:20501
+      volumes:
+        - ${{ github.workspace }}:/Python/tests
 
     steps:
-      - name: Setup Python (x64)
-        uses: actions/setup-python@v2.2.2
-        with:
-          python-version: ${{ matrix.python-version }}
-          architecture: x64
-
-      - name: Display Python version (x64)
-        run: |
-          python -c "import sys; print(sys.version)"
-
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Install Dependencies
-        if: always()
-        run: |
-          cd ${{ github.workspace }}/Python/tests
-          python -m pip install -r requirements.txt
-      
       - name: Run Tests
         if: always()
         run: |
-          cd ${{ github.workspace }}/Python/tests
-          nose2 --config
-          nose2 testNames [test_import_modules.py, test_RobotSim6Axes.py]
-      
+          docker pull robodk/robodk:latest
+          docker run -dp 20501:20501 --name robodk -t robodk:latest
+          cd /Python/tests
+          python nose2 --config nose2.cfg -v
+
       - name: Upload Test Results
+        if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: Test Results
-          path: | 
+          name: TestResults
+          path: |
            /Python/tests/results.xml
-        
-      - name: Upload HTML Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: HTML Report
-          path: | 
            /Python/tests/report.html
-  
-  build_windows:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [windows-latest]
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
-
-    steps:
-      - name: Setup Python (x64)
-        uses: actions/setup-python@v2.2.2
-        with:
-          python-version: ${{ matrix.python-version }}
-          architecture: x64
-      
-      - name: Display Python version (x64)
-        run: python -c "import sys; print(sys.version)"
-
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Assert Location
-        run: |
-          cd ${{ github.workspace }}
-          ls
-      
-      - name: Install Dependencies
-        run: |
-          cd ${{ github.workspace }}\Python\tests
-          python -m pip install -r requirements.txt
-      
-      - name: Run Tests
-        run: |
-          nose2 --config
