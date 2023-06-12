@@ -47,6 +47,9 @@ jobs:
 
       - name: Run Tests
         run: |
+          cd ..
+          ls
+          cd RoboDK 
           ls
           cd /bin
           ls
