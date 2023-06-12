@@ -30,7 +30,7 @@ jobs:
       ports:
         - 20501:20501
       volumes:
-        - ${{ github.workspace }}:/Python/tests
+        - ${{ github.workspace }}:./
 
     steps:
       - name: Checkout
@@ -46,13 +46,13 @@ jobs:
 
       - name: Run Tests
         run: |
-          cd /Python/tests/Python
+          cd /Python/tests
           echo "Current directory:"
           pwd
           echo "Directory content:"
           ls -la
           mkdir -p test_reports
-          nose2 --verbose --log-capture --config nose2.cfg -s /Python/tests/Python
+          nose2 --verbose --log-capture --config nose2.cfg -s /Python/tests
           echo "Generated report:"
           ls -la test_reports
           
