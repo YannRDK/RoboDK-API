@@ -47,7 +47,7 @@ jobs:
         run: |
           cd /Python/tests
           mkdir test_reports
-          nose2 --config nose2.cfg -v --log-capture --plugin=nose2_html_report.html_report --html-report-dir=test_reports --junit-xml test_reports/results.xml
+          nose2 --config nose2.cfg -v --log-capture -s /Python/tests
 
       - name: Upload Test Results
         uses: actions/upload-artifact@v2
