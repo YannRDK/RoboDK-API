@@ -39,7 +39,7 @@ jobs:
       - name: Run Tests
         run: |
           cd /Python/tests
-          python nose2 --config nose2.cfg -v
+          nose2 --config nose2.cfg -v
 
       - name: Upload Test Results
         if: always()
