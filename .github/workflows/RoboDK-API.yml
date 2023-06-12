@@ -46,7 +46,7 @@ jobs:
       - name: Run Tests
         run: |
           cd /Python/tests
-          nose2 --config nose2.cfg -v
+          nose2 --config nose2.cfg -v --log-capture --plugin=nose2_html_report.html_report test_import_modules
 
       - name: Upload Test Results
         if: always()
