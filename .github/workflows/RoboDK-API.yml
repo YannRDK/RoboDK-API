@@ -30,7 +30,7 @@ jobs:
       ports:
         - 20501:20501
       volumes:
-        - ${{ github.workspace }}/Python/tests:Python/tests
+        - ${{ github.workspace }}/Python/tests:/Python/tests
 
     steps:
       - name: Checkout
