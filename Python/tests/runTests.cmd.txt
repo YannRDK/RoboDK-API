@@ -1,2 +1,0 @@
-python -m nose2 -v --config nose2.cfg --log-capture -s /Python/tests
-report.html

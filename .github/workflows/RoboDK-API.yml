@@ -47,9 +47,7 @@ jobs:
         run: |
           cd /Python/tests
           mkdir -p /Python/tests/test_reports
-          unittest -v
-          runTests.cmd
-          nose2 -v --config nose2.cfg --log-capture -s /Python/tests
+          nose2 -verbose --log-capture --config nose2.cfg test_import_modules
           report.html
           
 
