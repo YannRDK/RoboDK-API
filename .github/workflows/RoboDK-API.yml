@@ -10,6 +10,7 @@ on:
 
 env:
   BUILD_TYPE: Release
+  ROBODK_BIN: /opt/robodk/bin/RoboDK
 
 jobs:
 
@@ -30,7 +31,7 @@ jobs:
       ports:
         - 20501:20501
       volumes:
-        - ${{ github.workspace }}:./
+        - ${{ github.workspace }}:/Python/tests
 
     steps:
       - name: Checkout
@@ -46,13 +47,13 @@ jobs:
 
       - name: Run Tests
         run: |
-          cd /Python/tests
+          cd /Python/tests/Python
           echo "Current directory:"
           pwd
           echo "Directory content:"
           ls -la
           mkdir -p test_reports
-          nose2 --verbose --log-capture --config nose2.cfg -s /Python/tests
+          nose2 --verbose --log-capture --config nose2.cfg -s /Python/tests/Python
           echo "Generated report:"
           ls -la test_reports
           
