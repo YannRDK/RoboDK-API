@@ -34,6 +34,10 @@ jobs:
         - ${{ github.workspace }}:/Python/tests
 
     steps:
+      - name: docker run
+        run: |
+          docker run -dp 20501:20501 -e RDK_PORT=20501 -t robodk:latest
+
       - name: Checkout
         uses: actions/checkout@v3
 
