@@ -46,7 +46,7 @@ jobs:
       - name: Run Tests
         run: |
           mkdir -p /Python/tests/test_reports
-          nose2 -v --config nose2.cfg --log-capture -s /Python/tests --junit-xml
+          nose2 -v --config nose2.cfg --log-capture -s /Python/tests
 
       - name: Upload Test Results
         uses: actions/upload-artifact@v2
