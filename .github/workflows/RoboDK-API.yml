@@ -47,13 +47,9 @@ jobs:
 
       - name: Run Tests
         run: |
-          cd ..
-          ls
-          cd RoboDK 
-          ls
           cd /bin
           ls
-          cd ..
+          cd ../API_TEST/Python/tests
           mkdir -p test_reports
           cd test_reports
           nose2 --verbose --log-capture --config nose2.cfg -s /API_TEST/Python/tests
