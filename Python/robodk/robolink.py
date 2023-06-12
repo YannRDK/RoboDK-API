@@ -438,7 +438,7 @@ def getPathRoboDK():
     from sys import platform as _platform
     if _platform == "linux" or _platform == "linux2":
         # Ubuntu, Linux or Debian
-        return os.path.expanduser("~/bin/RoboDK")
+        return os.path.expanduser("~/RoboDK/bin/RoboDK")
     elif _platform == "darwin":
         # MacOS
         #self.APPLICATION_DIR = "/Applications/RoboDK.app/Contents/MacOS/RoboDK"
