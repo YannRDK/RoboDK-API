@@ -46,9 +46,14 @@ jobs:
       - name: Run Tests
         run: |
           cd /Python/tests
+          echo "Current directory:"
+          pwd
+          echo "Directory content:"
+          ls -la
           mkdir -p /Python/tests/test_reports
-          nose2 --verbose --log-capture --config nose2.cfg
-          report.html
+          nose2 --verbose --log-capture --config nose2.cfg -s /Python/tests
+          echo "Generated report:"
+          ls -la /Python/tests/test_reports
           
 
       - name: Upload Test Results
