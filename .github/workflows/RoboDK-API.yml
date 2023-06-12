@@ -31,7 +31,7 @@ jobs:
       ports:
         - 20501:20501
       volumes:
-        - ${{ github.workspace }}:/github/home
+        - ${{ github.workspace }}:/github/home/RDK_API
 
     steps:
       - name: Checkout
@@ -50,16 +50,16 @@ jobs:
           cd /github/home
           ls -la
           pwd
-          cd /github/home/Python
+          cd /github/home/RDK_API
           ls -la
           pwd
-          cd /Python/home/RoboDK
+          cd /github/home/RDK_API/Python
           ls -la
           pwd
-          cd /Python/tests/Python/tests
+          cd /github/home/RDK_API/Python/tests
           ls -la
           mkdir -p test_reports
-          nose2 --verbose --log-capture --config nose2.cfg -s /github/home/Python/tests
+          nose2 --verbose --log-capture --config nose2.cfg -s /github/home/RDK_API/Python/tests
           echo "Generated report:"
           ls -la test_reports
           
